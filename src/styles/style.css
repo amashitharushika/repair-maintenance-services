@@ -174,6 +174,29 @@ body {
     transform: translateY(0);
 }
 
+.services-btn {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: #90EE90; /* Light green */
+    color: #1a1a1a;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+    border: none;
+    text-align: center;
+  }
+  
+  .services-btn:hover {
+    background-color: #32CD32; /* Different green on hover */
+    transform: translateY(-2px);
+  }
+  
+  .services-btn:active {
+    transform: translateY(0);
+  }
 /* Services Section */
 .services {
     padding: 5rem 0;
@@ -540,6 +563,7 @@ body {
 .form-group .required {
     color: #ef4444;
     margin-left: 2px;
+}
 }
 
 .form-group input.error,
