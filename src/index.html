@@ -12,7 +12,15 @@
     <nav class="navbar">
         <div class="container">
             <div class="nav-brand">
-                <h1>RepairPro</h1>
+                <a href="#home" class="logo">
+                    <svg class="logo-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="8" fill="#103713"/>
+                        <path d="M20 10L25 18H28L23 26H17L12 18H15L20 10Z" fill="#628B35"/>
+                        <circle cx="20" cy="22" r="3" fill="#E2DBDO"/>
+                        <path d="M15 30L20 28L25 30" stroke="#628B35" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <span class="logo-text">RepairPro</span>
+                </a>
             </div>
             <ul class="nav-menu">
                 <li><a href="#home">Home</a></li>
@@ -30,6 +38,9 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
+        <div class="hero-image-container">
+            <img src="assests/heroimage.jpg" alt="Repair & Maintenance Services" class="hero-image" onerror="this.style.display='none'">
+        </div>
         <div class="container">
             <div class="hero-content">
                 <h2 class="hero-title">Affordable Repair & Maintenance Services</h2>
@@ -46,6 +57,81 @@
             <p class="section-subtitle">Comprehensive repair and maintenance solutions for your every need</p>
             <div class="services-grid" id="servicesGrid">
                 <!-- Services will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About Us</h2>
+                    <p>RepairPro is a newly established repair and maintenance service company, committed to providing reliable and professional solutions for all your repair needs. Although we're new to the market, we bring fresh energy, modern approaches, and a dedication to excellence in every project we undertake.</p>
+                    <p>Our team of skilled professionals is passionate about delivering quality workmanship and exceptional customer service. We believe in building trust through honest communication, fair pricing, and going the extra mile to ensure your complete satisfaction.</p>
+                    <ul class="about-features">
+                        <li>Fresh & Modern Approach</li>
+                        <li>Licensed & Insured Professionals</li>
+                        <li>24/7 Emergency Service Available</li>
+                        <li>100% Satisfaction Guarantee</li>
+                        <li>Competitive & Transparent Pricing</li>
+                    </ul>
+                </div>
+                <div class="about-image-container">
+                    <img src="assests/2.jpg" alt="Our Team" class="about-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h2>Contact Us</h2>
+                    <p>Have a question or need to schedule a service? Get in touch with us today. We're here to help!</p>
+                    <ul class="contact-details">
+                        <li>
+                            <strong>Phone:</strong>
+                            <span>+94 77 123 4567</span>
+                        </li>
+                        <li>
+                            <strong>Email:</strong>
+                            <span>info@repairpro.com</span>
+                        </li>
+                        <li>
+                            <strong>Address:</strong>
+                            <span>123 Galle Road, Colombo 03, Sri Lanka</span>
+                        </li>
+                        <li>
+                            <strong>Hours:</strong>
+                            <span>Mon-Fri: 8AM-6PM, Sat: 9AM-4PM</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="contact-form">
+                    <h3>Send us a Message</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="contactName">Your Name</label>
+                            <input type="text" id="contactName" name="contactName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactEmail">Email</label>
+                            <input type="email" id="contactEmail" name="contactEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactSubject">Subject</label>
+                            <input type="text" id="contactSubject" name="contactSubject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactMessage">Message</label>
+                            <textarea id="contactMessage" name="contactMessage" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="cta-button">Send Message</button>
+                    </form>
+                </div>
             </div>
         </div>
     </section>

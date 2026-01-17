@@ -5,6 +5,7 @@ const services = [
         name: 'Plumbing',
         description: 'Expert plumbing services for all your water and drainage needs. From leak repairs to complete installations.',
         icon: '🔧',
+        image: 'assests/booking/plumbing.jpg',
         features: [
             'Leak detection and repair',
             'Pipe installation',
@@ -17,6 +18,7 @@ const services = [
         name: 'Electrical',
         description: 'Safe and reliable electrical services. Licensed electricians for all your electrical needs.',
         icon: '⚡',
+        image: 'assests/booking/electrical.jpg',
         features: [
             'Wiring and rewiring',
             'Panel upgrades',
@@ -29,6 +31,7 @@ const services = [
         name: 'AC Repair',
         description: 'Keep your home cool with our professional air conditioning repair and maintenance services.',
         icon: '❄️',
+        image: 'assests/booking/ac.jpg',
         features: [
             'AC installation',
             'Maintenance & cleaning',
@@ -41,6 +44,7 @@ const services = [
         name: 'Carpentry',
         description: 'Quality carpentry work for custom furniture, repairs, and home improvements.',
         icon: '🪚',
+        image: 'assests/booking/carpenter.jpg',
         features: [
             'Custom furniture',
             'Cabinet installation',
@@ -57,6 +61,7 @@ const bookServiceBtn = document.getElementById('bookServiceBtn');
 const bookingModal = document.getElementById('bookingModal');
 const closeModal = document.querySelector('.close-modal');
 const bookingForm = document.getElementById('bookingForm');
+const contactForm = document.getElementById('contactForm');
 const servicesGrid = document.getElementById('servicesGrid');
 
 // Initialize app
@@ -65,6 +70,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeServices();
     initializeModal();
     initializeForm();
+    initializeContactForm();
+    initializeSmoothScroll();
 });
 
 // Navigation toggle for mobile
@@ -84,17 +91,42 @@ function initializeNavigation() {
     }
 }
 
+// Smooth scroll for anchor links
+function initializeSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href !== '#' && href.length > 1) {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    const offsetTop = target.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        });
+    });
+}
+
 // Render services cards
 function initializeServices() {
     if (servicesGrid) {
         servicesGrid.innerHTML = services.map(service => `
             <div class="service-card" data-service-id="${service.id}">
-                <div class="service-icon">${service.icon}</div>
-                <h3>${service.name}</h3>
-                <p>${service.description}</p>
-                <ul class="service-features">
-                    ${service.features.map(feature => `<li>${feature}</li>`).join('')}
-                </ul>
+                <div class="service-image-container">
+                    <img src="${service.image}" alt="${service.name}" class="service-image">
+                </div>
+                <div class="service-content">
+                    <div class="service-icon">${service.icon}</div>
+                    <h3>${service.name}</h3>
+                    <p>${service.description}</p>
+                    <ul class="service-features">
+                        ${service.features.map(feature => `<li>${feature}</li>`).join('')}
+                    </ul>
+                </div>
             </div>
         `).join('');
 
@@ -312,6 +344,45 @@ async function fetchBookingStatus(bookingId) {
     } catch (error) {
         console.error('Error fetching booking status:', error);
         throw error;
+    }
+}
+
+// Contact form submission
+function initializeContactForm() {
+    if (contactForm) {
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('contactName').value,
+                email: document.getElementById('contactEmail').value,
+                subject: document.getElementById('contactSubject').value,
+                message: document.getElementById('contactMessage').value
+            };
+
+            // Show loading state
+            const submitButton = contactForm.querySelector('button[type="submit"]');
+            const originalText = submitButton.textContent;
+            submitButton.textContent = 'Sending...';
+            submitButton.disabled = true;
+
+            try {
+                // TODO: Replace with actual API endpoint
+                console.log('Contact form submission:', formData);
+                
+                // Simulate API delay
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                alert('Message sent successfully! We will get back to you soon.');
+                contactForm.reset();
+            } catch (error) {
+                console.error('Contact form error:', error);
+                alert('An error occurred. Please try again later.');
+            } finally {
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
+            }
+        });
     }
 }
 
