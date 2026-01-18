@@ -652,6 +652,226 @@ if (loginForm) {
     });
 }
 
+function initializeProfilePage() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    
+    // Redirect to login if no user is found
+    if (!currentUser) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    // --- 1. Get DOM Elements ---
+    const profileName = document.getElementById('profileName');
+    const profileEmail = document.getElementById('profileEmail');
+    const avatarInput = document.getElementById('avatarInput');
+    const avatarImage = document.getElementById('avatarImage');
+    const editBtn = document.getElementById('editProfileBtn');
+    const saveBtn = document.getElementById('saveProfileBtn');
+    const cancelBtn = document.getElementById('cancelProfileBtn');
+    const uploadBtn = document.getElementById('uploadAvatarBtn');
+    const profileForm = document.getElementById('profileForm');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const messageArea = document.getElementById('profileMessage');
+
+    // --- 2. State Tracking (for Cancel logic) ---
+    let originalState = {
+        name: '',
+        avatarSrc: ''
+    };
+
+    // --- 3. Initial Data Fetch ---
+    fetchProfileData(currentUser.email);
+
+    // --- 4. Event Listeners ---
+
+    // Avatar Upload Click
+    uploadBtn.addEventListener('click', () => avatarInput.click());
+
+    // Avatar File Selection (Preview)
+    avatarInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                avatarImage.src = e.target.result; // Update image tag immediately
+                checkForChanges(); // Enable save button
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Edit Button Click
+    editBtn.addEventListener('click', () => {
+        setEditMode(true);
+        saveBtn.disabled = true; // Start disabled until a change happens
+        // Save current state so we can cancel later
+        originalState.name = profileName.value;
+        originalState.avatarSrc = avatarImage.src;
+    });
+
+    // Cancel Button Click
+    cancelBtn.addEventListener('click', () => {
+        setEditMode(false);
+        // Revert to original state
+        profileName.value = originalState.name;
+        avatarImage.src = originalState.avatarSrc;
+        avatarInput.value = ''; // Reset file input
+        messageArea.textContent = '';
+    });
+
+    // Detect Name Changes
+    profileName.addEventListener('input', checkForChanges);
+
+    // Save Changes (Form Submit)
+    profileForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // Prepare data to send
+        const updatedData = {
+            email: currentUser.email,
+            name: profileName.value,
+            avatar: avatarImage.src // This sends the Base64 image string
+        };
+
+        // UI Updates
+        saveBtn.textContent = 'Saving...';
+        saveBtn.disabled = true;
+        messageArea.textContent = '';
+
+        try {
+            const response = await fetch('/profile/update', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatedData)
+            });
+
+            if (!response.ok) throw new Error(`Server error: ${response.status}`);
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                showMessage('Profile updated successfully!', 'success');
+                setEditMode(false);
+                
+                // Update LocalStorage so the header name/icon stays fresh
+                currentUser.name = updatedData.name;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            } else {
+                showMessage(data.message || 'Update failed', 'error');
+                saveBtn.disabled = false;
+            }
+        } catch (error) {
+            console.error('Update error:', error);
+            showMessage('Network error: Unable to save. Check server connection.', 'error');
+            saveBtn.disabled = false;
+        } finally {
+            if (!saveBtn.disabled) saveBtn.textContent = 'Save Changes';
+        }
+    });
+
+    // Logout Logic
+    logoutBtn.addEventListener('click', () => {
+        localStorage.removeItem('currentUser');
+        window.location.href = 'index.html';
+    });
+
+    // --- Helper Functions ---
+
+    function checkForChanges() {
+        const nameChanged = profileName.value.trim() !== originalState.name;
+        const avatarChanged = avatarInput.files.length > 0; // If file input has a file
+        
+        if (nameChanged || avatarChanged) {
+            saveBtn.disabled = false;
+        } else {
+            saveBtn.disabled = true;
+        }
+    }
+
+    function setEditMode(isEditing) {
+        profileName.disabled = !isEditing;
+        if (isEditing) {
+            editBtn.style.display = 'none';
+            saveBtn.style.display = 'inline-block';
+            cancelBtn.style.display = 'inline-block';
+            uploadBtn.style.display = 'block';
+        } else {
+            editBtn.style.display = 'inline-block';
+            saveBtn.style.display = 'none';
+            cancelBtn.style.display = 'none';
+            uploadBtn.style.display = 'none';
+        }
+    }
+
+    function showMessage(msg, type) {
+        messageArea.textContent = msg;
+        messageArea.className = 'message-area ' + (type === 'success' ? 'message-success' : 'message-error');
+        if (type === 'success') {
+            setTimeout(() => messageArea.textContent = '', 3000);
+        }
+    }
+}
+
+async function fetchProfileData(email) {
+    try {
+        const res = await fetch(`/profile?email=${email}`);
+        if (!res.ok) throw new Error('Failed to fetch profile');
+        
+        const data = await res.json();
+        
+        const nameInput = document.getElementById('profileName');
+        const emailInput = document.getElementById('profileEmail');
+        const avatarImg = document.getElementById('avatarImage');
+
+        if (nameInput) nameInput.value = data.name || '';
+        if (emailInput) emailInput.value = data.email || email;
+        
+        // If the backend has an avatar, display it. Otherwise keep the default.
+        if (data.avatar && avatarImg) {
+            avatarImg.src = data.avatar;
+        }
+    } catch (e) {
+        console.error(e);
+        const msg = document.getElementById('profileMessage');
+        if (msg) {
+            msg.textContent = "Could not load profile data.";
+            msg.className = "message-area message-error";
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
