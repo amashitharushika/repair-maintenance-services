@@ -174,32 +174,6 @@ body {
     transform: translateY(0);
 }
 
-.services-btn {
-    display: inline-block;
-    padding: 1rem 2.5rem;
-    background-color: #4CAF50; /* Complementary green */
-    color: var(--white);
-    text-decoration: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    border: none;
-    text-align: center;
-    box-shadow: var(--shadow-lg);
-}
-
-.services-btn:hover {
-    background-color: #45a049; /* Darker green on hover */
-    transform: translateY(-2px);
-    box-shadow: 0 12px 20px -5px rgba(76, 175, 80, 0.4);
-}
-
-.services-btn:active {
-    transform: translateY(0);
-}
-
 /* Services Section */
 .services {
     padding: 5rem 0;
