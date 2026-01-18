@@ -170,9 +170,58 @@ body {
     box-shadow: 0 12px 20px -5px rgba(16, 55, 19, 0.4);
 }
 
+
 .cta-button:active {
     transform: translateY(0);
 }
+
+.cta-button.login-btn {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    border: none;
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-lg);
+}
+
+.cta-button.login-btn:hover {
+    background-color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 20px -5px rgba(16, 55, 19, 0.4);
+}
+
+
+.cta-button.login-btn:active {
+    transform: translateY(0);
+}
+
+.cta-button.register-btn {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border: none;
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-lg);
+}
+
+.cta-button.register-btn:hover {
+    background-color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 20px -5px rgba(16, 55, 19, 0.4);
+}
+
+.cta-button.register-btn:active {
+    transform: translateY(0);
+}
+
 
 /* Services Section */
 .services {
