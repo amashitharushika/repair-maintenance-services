@@ -176,27 +176,30 @@ body {
 
 .services-btn {
     display: inline-block;
-    padding: 12px 30px;
-    background-color: #90EE90; /* Light green */
-    color: #1a1a1a;
+    padding: 1rem 2.5rem;
+    background-color: #4CAF50; /* Complementary green */
+    color: var(--white);
     text-decoration: none;
-    border-radius: 5px;
-    font-size: 16px;
+    border-radius: 8px;
+    font-size: 1.1rem;
     font-weight: 600;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: all 0.3s ease;
     cursor: pointer;
     border: none;
     text-align: center;
-  }
-  
-  .services-btn:hover {
-    background-color: #32CD32; /* Different green on hover */
+    box-shadow: var(--shadow-lg);
+}
+
+.services-btn:hover {
+    background-color: #45a049; /* Darker green on hover */
     transform: translateY(-2px);
-  }
-  
-  .services-btn:active {
+    box-shadow: 0 12px 20px -5px rgba(76, 175, 80, 0.4);
+}
+
+.services-btn:active {
     transform: translateY(0);
-  }
+}
+
 /* Services Section */
 .services {
     padding: 5rem 0;
