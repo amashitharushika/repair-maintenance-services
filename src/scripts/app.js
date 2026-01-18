@@ -394,3 +394,72 @@ if (typeof module !== 'undefined' && module.exports) {
         fetchBookingStatus
     };
 }
+
+// --- New Auth Logic ---
+const loginForm = document.getElementById('loginForm');
+const registerForm = document.getElementById('registerForm');
+const toRegister = document.getElementById('toRegister');
+const toLogin = document.getElementById('toLogin');
+const authTitle = document.getElementById('authTitle');
+const authMessage = document.getElementById('authMessage');
+
+if (toRegister) {
+    toRegister.onclick = () => {
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'block';
+        authTitle.innerText = 'Register';
+    };
+}
+
+if (toLogin) {
+    toLogin.onclick = () => {
+        registerForm.style.display = 'none';
+        loginForm.style.display = 'block';
+        authTitle.innerText = 'Login';
+    };
+}
+
+// Registration Submit
+if (registerForm) {
+    registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('regName').value;
+        const email = document.getElementById('regEmail').value;
+        const password = document.getElementById('regPass').value;
+        const confirm = document.getElementById('regConfirmPass').value;
+
+        if (password !== confirm) {
+            authMessage.innerText = "Passwords do not match!";
+            return;
+        }
+
+        const res = await fetch('/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, password })
+        });
+        const data = await res.json();
+        authMessage.innerText = data.message;
+        if(data.success) registerForm.reset();
+    });
+}
+
+// Login Submit
+if (loginForm) {
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPass').value;
+
+        const res = await fetch('/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        authMessage.innerText = data.message;
+        if (data.success) window.location.href = 'index.html';
+    });
+}
+
+

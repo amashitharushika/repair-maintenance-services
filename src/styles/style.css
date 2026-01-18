@@ -642,3 +642,23 @@ body {
         font-size: 2rem;
     }
 }
+
+/* Auth Specific */
+#authContainer form {
+    transition: all 0.3s ease;
+}
+
+/* Fix for the CSS bug found in previous turn */
+.logo-text {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.form-group .required {
+    color: #ef4444;
+    margin-left: 2px;
+}
+
+
+
