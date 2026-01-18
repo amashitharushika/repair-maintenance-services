@@ -180,18 +180,20 @@ body {
     background-color: var(--secondary-color); /* Light green */
     color: var(--white);
     text-decoration: none;
-    border-radius: 5px;
-    font-size: 16px;
+    border-radius: 8px;
+    font-size: 1.1rem;
     font-weight: 600;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: all 0.3s ease;
     cursor: pointer;
     border: none;
     text-align: center;
+    box-shadow: var(--shadow-lg);
   }
   
   .services-btn:hover {
     background-color: var(--primary-color); /* Different green on hover */
     transform: translateY(-2px);
+    box-shadow: 0 12px 20px -5px rgba(16, 55, 19, 0.4);
   }
   
   .services-btn:active {
